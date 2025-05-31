@@ -1,15 +1,17 @@
-
-export interface Event {
+ export interface Event {
   id: string;
   title: string;
   description: string;
-  date: string; // ISO date string (e.g., "2024-06-15T14:30:00Z")
+  date: string; 
   location: string;
   createdAt: string;
   updatedAt: string; 
 }
 
-// Type for creating a new event (without id, createdAt, updatedAt)
+
+
+
+// Type for creating a new event 
 export interface CreateEventRequest {
   title: string;
   description: string;
@@ -26,15 +28,23 @@ export interface UpdateEventRequest {
   location?: string;
 }
 
+
+
+
 // API Response types
 export interface EventsResponse {
   events: Event[];
   count: number;
 }
 
+
+
 export interface EventResponse {
   event: Event;
 }
+
+
+
 
 export interface ErrorResponse {
   error: string;
@@ -42,13 +52,18 @@ export interface ErrorResponse {
   statusCode: number;
 }
 
+
+
+
 // Utility type for event validation
 export interface EventValidationResult {
   isValid: boolean;
   errors: string[];
 }
 
-// Enum 
+
+
+
 export enum EventSortBy {
   DATE_ASC = 'date_asc',
   DATE_DESC = 'date_desc',
@@ -57,5 +72,3 @@ export enum EventSortBy {
   CREATED_ASC = 'created_asc',
   CREATED_DESC = 'created_desc'
 }
-
-
