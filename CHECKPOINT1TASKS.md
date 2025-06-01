@@ -46,6 +46,15 @@
 
 ---
 
+## ✅ Task 5: RESTful API Endpoints
+
+**Status**: Completed  
+**Description**: Implement complete REST API for events with full CRUD operations  
+**Files Created**:
+
+- `server/src/routes/events.ts` - All REST endpoints (GET, POST, PUT, DELETE)
+- `server/src/routes/__tests__/events.test.ts` - Integration tests for all endpoints
+
 ## Summary of Achievements
 
 ### Technical Accomplishments
@@ -64,6 +73,8 @@
 4. `server/src/services/eventStorage.ts`
 5. `server/src/middleware/__tests__/validation.test.ts`
 6. `server/src/middleware/validation.ts`
+7. `server/src/routes/__tests__/events.test.ts`
+8. `server/src/routes/events.ts`
 
 ### Next Steps for Checkpoint 2
 

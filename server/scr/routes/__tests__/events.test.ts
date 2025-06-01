@@ -5,8 +5,15 @@ import { eventRoutes } from '../events';
 import { eventStorage } from '../../services/eventStorage';
 import { Event } from '../../types/Event';
 
-// Mock the eventStorage
+
+
+
 jest.mock('../../services/eventStorage');
+
+
+
+
+
 
 const app = express();
 app.use(express.json());
@@ -18,6 +25,10 @@ describe('Events Routes', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+
+
+
+
 
   describe('GET /api/events', () => {
     it('should return all events', async () => {
@@ -53,6 +64,10 @@ describe('Events Routes', () => {
     });
   });
 
+
+
+
+
   describe('GET /api/events/:id', () => {
     it('should return event by id', async () => {
       const mockEvent: Event = {
@@ -85,6 +100,10 @@ describe('Events Routes', () => {
       expect(response.body).toEqual({ error: 'Event not found' });
     });
   });
+
+
+
+
 
   describe('POST /api/events', () => {
     it('should create new event with valid data', async () => {
@@ -130,6 +149,10 @@ describe('Events Routes', () => {
       expect(response.body.error).toBe('Validation failed');
     });
   });
+
+
+
+
 
   describe('PUT /api/events/:id', () => {
     it('should update existing event', async () => {
@@ -182,6 +205,10 @@ describe('Events Routes', () => {
     });
   });
 
+
+
+
+  
   describe('DELETE /api/events/:id', () => {
     it('should delete existing event', async () => {
       mockEventStorage.deleteEvent.mockResolvedValue(true);
