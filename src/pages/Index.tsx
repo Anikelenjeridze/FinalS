@@ -4,8 +4,9 @@ import { EventForm } from '../components/EventForm';
 import { Header } from '../components/Header';
 import { EmptyState } from '../components/EmptyState';
 import { LocationFilter } from '../components/LocationFilter';
+import { EventAnalytics } from '../components/EventAnalytics';
 import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
+import { Plus, BarChart } from 'lucide-react';
 import { getCurrentLocation, parseLocationCoordinates, calculateDistance } from '../services/locationService';
 
 export interface Event {
@@ -24,6 +25,7 @@ const Index = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [showForm, setShowForm] = useState(false);
+  const [showAnalytics, setShowAnalytics] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [userLocation, setUserLocation] = useState<{latitude: number, longitude: number} | null>(null);
 
@@ -132,13 +134,24 @@ const Index = () => {
             <p className="text-gray-600">Discover what's happening in your community</p>
           </div>
           
-          <Button 
-            onClick={() => setShowForm(true)}
-            className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-          >
-            <Plus className="mr-2 h-5 w-5" />
-            Post Event
-          </Button>
+          <div className="flex gap-3">
+            <Button 
+              onClick={() => setShowAnalytics(true)}
+              variant="outline"
+              className="flex items-center gap-2"
+            >
+              <BarChart className="h-5 w-5" />
+              Analytics
+            </Button>
+            
+            <Button 
+              onClick={() => setShowForm(true)}
+              className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            >
+              <Plus className="mr-2 h-5 w-5" />
+              Post Event
+            </Button>
+          </div>
         </div>
 
         {/* Location Filter */}
@@ -192,6 +205,13 @@ const Index = () => {
             onClose={() => setShowForm(false)}
           />
         )}
+
+        {/* Analytics Modal */}
+        <EventAnalytics 
+          events={events}
+          isOpen={showAnalytics}
+          onClose={() => setShowAnalytics(false)}
+        />
       </main>
     </div>
   );

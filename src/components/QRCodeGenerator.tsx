@@ -1,9 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import QRCode from 'qrcode';
 import { QrCode, Download, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Event } from '../pages/Index';
+import { analyticsService } from '../services/analyticsService';
 
 interface QRCodeGeneratorProps {
   event: Event;
@@ -43,6 +43,9 @@ export const QRCodeGenerator = ({ event }: QRCodeGeneratorProps) => {
       });
       setQrCodeUrl(qrDataUrl);
       setShowQR(true);
+      
+      // Track QR code generation
+      analyticsService.updateQRScans(event.id);
     } catch (error) {
       console.error('Error generating QR code:', error);
     }
@@ -59,6 +62,9 @@ export const QRCodeGenerator = ({ event }: QRCodeGeneratorProps) => {
 
   const shareEvent = async () => {
     const eventUrl = generateEventUrl();
+    
+    // Track share action
+    analyticsService.updateEventShares(event.id);
     
     if (navigator.share) {
       try {

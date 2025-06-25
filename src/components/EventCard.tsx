@@ -1,6 +1,8 @@
 import { Calendar, Clock, MapPin, User } from 'lucide-react';
 import { Event } from '../pages/Index';
 import { QRCodeGenerator } from './QRCodeGenerator';
+import { analyticsService } from '../services/analyticsService';
+import { useEffect } from 'react';
 
 interface EventCardProps {
   event: Event;
@@ -8,6 +10,11 @@ interface EventCardProps {
 }
 
 export const EventCard = ({ event, distance }: EventCardProps) => {
+  // Track views when component mounts
+  useEffect(() => {
+    analyticsService.updateEventViews(event.id, event.title, event.category);
+  }, [event.id, event.title, event.category]);
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { 
