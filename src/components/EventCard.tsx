@@ -1,12 +1,13 @@
-
 import { Calendar, Clock, MapPin, User } from 'lucide-react';
 import { Event } from '../pages/Index';
+import { QRCodeGenerator } from './QRCodeGenerator';
 
 interface EventCardProps {
   event: Event;
+  distance?: string | null;
 }
 
-export const EventCard = ({ event }: EventCardProps) => {
+export const EventCard = ({ event, distance }: EventCardProps) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { 
@@ -38,11 +39,16 @@ export const EventCard = ({ event }: EventCardProps) => {
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-100 overflow-hidden">
       <div className="p-6">
-        {/* Category Badge */}
+        {/* Category Badge and Distance */}
         <div className="flex justify-between items-start mb-4">
           <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getCategoryColor(event.category)}`}>
             {event.category}
           </span>
+          {distance && (
+            <span className="bg-green-100 text-green-800 border border-green-200 px-2 py-1 rounded-full text-xs font-medium">
+              {distance}
+            </span>
+          )}
         </div>
 
         {/* Event Title */}
@@ -74,9 +80,12 @@ export const EventCard = ({ event }: EventCardProps) => {
         </div>
 
         {/* Event Description */}
-        <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
+        <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed mb-4">
           {event.description}
         </p>
+
+        {/* QR Code and Sharing */}
+        <QRCodeGenerator event={event} />
       </div>
 
       {/* Card Footer */}
