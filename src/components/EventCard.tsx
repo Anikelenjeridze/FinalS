@@ -1,6 +1,9 @@
+
 import { Calendar, Clock, MapPin, User } from 'lucide-react';
 import { Event } from '../pages/Index';
 import { QRCodeGenerator } from './QRCodeGenerator';
+import { WeatherWidget } from './WeatherWidget';
+import { isOutdoorEvent } from '../services/weatherService';
 import { analyticsService } from '../services/analyticsService';
 import { useEffect } from 'react';
 
@@ -43,14 +46,23 @@ export const EventCard = ({ event, distance }: EventCardProps) => {
     return colors[category as keyof typeof colors] || colors.Other;
   };
 
+  const isOutdoor = isOutdoorEvent(event.location, event.description);
+
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-100 overflow-hidden">
       <div className="p-6">
         {/* Category Badge and Distance */}
         <div className="flex justify-between items-start mb-4">
-          <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getCategoryColor(event.category)}`}>
-            {event.category}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getCategoryColor(event.category)}`}>
+              {event.category}
+            </span>
+            {isOutdoor && (
+              <span className="bg-sky-100 text-sky-800 border border-sky-200 px-2 py-1 rounded-full text-xs font-medium">
+                Outdoor
+              </span>
+            )}
+          </div>
           {distance && (
             <span className="bg-green-100 text-green-800 border border-green-200 px-2 py-1 rounded-full text-xs font-medium">
               {distance}
@@ -86,8 +98,15 @@ export const EventCard = ({ event, distance }: EventCardProps) => {
           </div>
         </div>
 
+        {/* Weather Widget for Outdoor Events */}
+        <WeatherWidget 
+          location={event.location}
+          date={event.date}
+          isOutdoor={isOutdoor}
+        />
+
         {/* Event Description */}
-        <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed mb-4">
+        <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed mb-4 mt-4">
           {event.description}
         </p>
 
